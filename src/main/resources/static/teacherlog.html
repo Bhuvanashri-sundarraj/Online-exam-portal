@@ -131,36 +131,27 @@
   </div>
 <script>
 function login() {
-  const loginId =
-    document.getElementById("login_id").value.trim();
-  const password =
-    document.getElementById("password").value.trim();
-  const message =
-    document.getElementById("message");
+  const loginId = document.getElementById("login_id").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const message = document.getElementById("message");
 
   message.textContent = "";
 
-  fetch("/api/teacher/login", {
-    method: "POST",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      loginId: loginId,
-      password: password
-    })
-  })
-  .then(res => {
-    if (!res.ok) throw new Error();
-    return res.json();
-  })
-  .then(() => {
+  // ✅ STATIC CREDENTIALS
+  const teachers = {
+    "teacher_01": "teacher@deepa",
+    "teacher_02": "teacher@hema"
+  };
+
+  if (teachers[loginId] && teachers[loginId] === password) {
+    // Optional: store login state
+    localStorage.setItem("teacherLogin", loginId);
+
+    // Redirect to dashboard
     window.location.href = "teacher.html";
-  })
-  .catch(() => {
+  } else {
     message.textContent = "❌ Invalid login ID or password";
-  });
+  }
 }
 </script>
 
