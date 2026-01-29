@@ -1,22 +1,23 @@
 package com.exam.onlineexam.dto;
 
-public class LoginResponse {
+public class LoginRequest {
 
-    private Long userId;
-    private String name;
+    private String loginId;
+    private String password;
 
-    public LoginResponse(Long userId, String name) {
-        this.userId = userId;
-        this.name = name;
-
+    public String getLoginId() {
+        return loginId;
     }
 
-    public Long getUserId() {
-        return userId;
+    public void setLoginId(String loginId) {
+        this.loginId = loginId;
     }
 
-    public String getName() {
-        return name;
+    public String getPassword() {
+        return password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
