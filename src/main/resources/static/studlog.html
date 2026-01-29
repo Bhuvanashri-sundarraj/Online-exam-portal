@@ -138,41 +138,34 @@
 </div>
 
 <script>
-    function login() {
-      const loginId = document.getElementById("login_id").value.trim();
-      const password = document.getElementById("password").value.trim();
-      const message = document.getElementById("message");
+function login() {
+  const loginId = document.getElementById("login_id").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const message = document.getElementById("message");
 
-      message.textContent = "";
+  message.textContent = "";
 
-      if (!loginId || !password) {
-        message.textContent = "⚠ Please enter login ID and password";
-        return;
-      }
+  if (!loginId || !password) {
+    message.textContent = "⚠ Please enter login ID and password";
+    return;
+  }
 
-      fetch("/api/login", {
-        method: "POST",
-        credentials: "include",   // ✅ REQUIRED for session
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ loginId, password })
-      })
-      .then(response => {
-        if (!response.ok) throw new Error("Invalid login");
-        return response.json();
-      })
-      .then(() => {
-        // ✅ Save student username for LocalStorage-based exam & results
-        localStorage.setItem("studentUsername", loginId);
+  // ✅ STATIC STUDENT CREDENTIALS
+  const students = {
+    "it_023": "student@023",
+    "it_034": "student@034"
+  };
 
-        // Redirect to student dashboard
-        window.location.href = "cam.html";
-      })
-      .catch(() => {
-        message.textContent = "❌ Invalid login ID or password";
-      });
-    }
+  if (students[loginId] && students[loginId] === password) {
+    // Save student login for exam flow
+    localStorage.setItem("studentUsername", loginId);
+
+    // Redirect to exam / camera page
+    window.location.href = "cam.html";
+  } else {
+    message.textContent = "❌ Invalid login ID or password";
+  }
+}
 </script>
 
 </body>
